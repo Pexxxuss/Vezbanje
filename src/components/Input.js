@@ -8,6 +8,9 @@ function Input() {
   const [weather, setWeather] = useState();
   async function fetchWeatherHandler() {
     const enteredCity = cityInputRef.current.value;
+    if (enteredCity.length === 0) {
+      return;
+    }
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${enteredCity}&appid=93307491367aa831090cf567944e8889&units=metric`
     );
@@ -28,13 +31,13 @@ function Input() {
     };
     setWeather(weatherData);
   }
-  console.log(weather);
-  const submitHandler = (event) => {
-    event.preventDefault();
-  };
+
   useEffect(() => {
     fetchWeatherHandler();
   }, []);
+  const submitHandler = (event) => {
+    event.preventDefault();
+  };
   return (
     <React.Fragment>
       <div className={classes.container}>
