@@ -1,24 +1,19 @@
 import classes from './Input.module.css';
 import React from 'react';
+import { weatherKey } from '../config';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import WeatherList from './WeatherList';
 function Input() {
-  const cityInputRef = useRef();
-  const [weather, setWeather] = useState();
+  const [enteredWeather, setEnteredWeather] = useState('');
+  const [weather, setWeather] = useState('');
   async function fetchWeatherHandler() {
-    const enteredCity = cityInputRef.current.value;
-    if (enteredCity.length === 0) {
+    if (enteredWeather === '') {
       return;
     }
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${enteredCity}&appid=93307491367aa831090cf567944e8889&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${enteredWeather}&appid=${weatherKey}&units=metric`
     );
-    if (!response.ok) {
-      const message = 'Enter valid name for city';
-      alert(message);
-      throw new Error(message);
-    }
     const data = await response.json();
     const weatherData = {
       name: data.name,
@@ -28,12 +23,16 @@ function Input() {
       pressure: data.main.pressure,
       feel: data.main.feels_like,
       humidity: data.main.humidity,
+      icon: data.weather[0].icon,
     };
     setWeather(weatherData);
   }
-
   useEffect(() => {
-    fetchWeatherHandler();
+    try {
+      fetchWeatherHandler();
+    } catch (error) {
+      console.log('error happened', error);
+    }
   }, []);
   const submitHandler = (event) => {
     event.preventDefault();
@@ -49,12 +48,16 @@ function Input() {
               type="text"
               id="weather"
               placeholder="Type City Name Here"
-              ref={cityInputRef}
+              value={enteredWeather}
+              onChange={(event) => {
+                setEnteredWeather(event.target.value);
+              }}
             ></input>
           </div>
           <div>
             <button
-              className={classes.button}
+              id="button"
+              className={enteredWeather ? classes.button : classes.disabled}
               onClick={fetchWeatherHandler}
               type="submit"
             >
@@ -72,6 +75,7 @@ function Input() {
               pressure={weather.pressure}
               feel={weather.feel}
               humidity={weather.humidity}
+              icon={weather.icon}
             />
           )}
         </section>
