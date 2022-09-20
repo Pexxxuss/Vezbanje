@@ -1,8 +1,7 @@
 import classes from './Input.module.css';
 import React from 'react';
-import { weatherKey } from '../config';
-
-import { useState, useEffect } from 'react';
+import { weatherKey } from '../../../config';
+import { useState } from 'react';
 import WeatherList from './WeatherList';
 function Input() {
   const [enteredWeather, setEnteredWeather] = useState('');
@@ -11,29 +10,34 @@ function Input() {
     if (enteredWeather === '') {
       return;
     }
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${enteredWeather}&appid=${weatherKey}&units=metric`
-    );
-    const data = await response.json();
-    const weatherData = {
-      name: data.name,
-      temp: data.main.temp,
-      tempMax: data.main.temp_max,
-      tempMin: data.main.temp_min,
-      pressure: data.main.pressure,
-      feel: data.main.feels_like,
-      humidity: data.main.humidity,
-      icon: data.weather[0].icon,
-    };
-    setWeather(weatherData);
-  }
-  useEffect(() => {
     try {
-      fetchWeatherHandler();
-    } catch (error) {
-      console.log('error happened', error);
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${enteredWeather}&appid=${weatherKey}&units=metric`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        const { name, main, weather } = data;
+        const { temp, temp_max, temp_min, pressure, feels_like, humidity } =
+          main;
+        const weatherData = {
+          name: name,
+          temp: temp,
+          tempMax: temp_max,
+          tempMin: temp_min,
+          pressure: pressure,
+          feel: feels_like,
+          humidity: humidity,
+          icon: weather[0].icon,
+        };
+        setWeather(weatherData);
+      }
+      if (!response.ok)
+        throw new Error(`Error: ${response.status}, ${response.statusText}`);
+    } catch (err) {
+      console.log('Error getting current weather', err);
     }
-  }, []);
+  }
+
   const submitHandler = (event) => {
     event.preventDefault();
   };
@@ -41,7 +45,7 @@ function Input() {
     <React.Fragment>
       <div className={classes.container}>
         <form className={classes.form} onSubmit={submitHandler}>
-          <h1>Welcome, perfect choice to find out todays forecast</h1>
+          <h1>Welcome, here you can find out todays forecast for your city</h1>
           <div>
             <label htmlFor="weather">Enter a City</label>
             <input

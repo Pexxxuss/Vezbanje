@@ -1,0 +1,30 @@
+.table {
+  display: flex;
+  padding-top: 4rem;
+  gap: 1rem;
+}
+.table div {
+  width: 20%;
+  flex-wrap: nowrap;
+  text-align: center;
+  padding-top: 0.4rem;
+  border: 1.5px solid rgb(109, 109, 109);
+  border-radius: 15px 30px;
+  box-shadow: 3px 4px rgb(109, 109, 109);
+  font-size: 1.3rem;
+}
+.table div img {
+  width: 5rem;
+}
+@media (max-width: 1008px) {
+  .table {
+    display: block;
+    width: 30rem;
+    text-align: center;
+    margin: auto;
+  }
+  .table div {
+    width: 100%;
+    margin-bottom: 1.2rem;
+  }
+}
