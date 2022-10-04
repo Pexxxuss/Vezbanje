@@ -3,7 +3,7 @@
   text-align: center;
   height: 3rem;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: 8rem;
   font-family: sans-serif;
   padding-top: 1rem;
   font-size: 1.9rem;
@@ -27,5 +27,10 @@
   }
   .sekcija .sadrzina {
     font-size: 1.2rem;
+  }
+}
+@media (max-height: 830px) {
+  html {
+    font-size: 80%;
   }
 }

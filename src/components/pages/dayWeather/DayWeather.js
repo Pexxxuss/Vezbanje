@@ -3,7 +3,9 @@ import React from 'react';
 import { weatherKey } from '../../../config';
 import { useState } from 'react';
 import WeatherList from './WeatherList';
-function Input() {
+import { Input, Box, Button } from '@mui/material';
+
+function DayWeather() {
   const [enteredWeather, setEnteredWeather] = useState('');
   const [weather, setWeather] = useState('');
   async function fetchWeatherHandler() {
@@ -48,25 +50,31 @@ function Input() {
           <h1>Welcome, here you can find out todays forecast for your city</h1>
           <div>
             <label htmlFor="weather">Enter a City</label>
-            <input
+
+            <Input
               type="text"
               id="weather"
               placeholder="Type City Name Here"
               value={enteredWeather}
+              sx={{ background: 'inherit' }}
               onChange={(event) => {
                 setEnteredWeather(event.target.value);
               }}
-            ></input>
+            ></Input>
           </div>
           <div>
-            <button
-              id="button"
-              className={enteredWeather ? classes.button : classes.disabled}
-              onClick={fetchWeatherHandler}
-              type="submit"
-            >
-              Search
-            </button>
+            <Box>
+              <Button
+                id="button"
+                variant="contained"
+                onClick={fetchWeatherHandler}
+                type="submit"
+                disabled={!enteredWeather}
+                sx={{ width: '10rem', height: '3rem', fontSize: '1.5rem' }}
+              >
+                Search
+              </Button>
+            </Box>
           </div>
         </form>
         <section className={classes.list}>
@@ -87,4 +95,4 @@ function Input() {
     </React.Fragment>
   );
 }
-export default Input;
+export default DayWeather;

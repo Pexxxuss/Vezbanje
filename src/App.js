@@ -1,7 +1,7 @@
 import { Route } from 'react-router-dom';
 import FiveDays from './components/pages/fiveDays/FiveDays';
 import AirPolution from './components/pages/airPolution/AirPolution';
-import Input from './components/pages/dayWeather/Input';
+import DayWeather from './components/pages/dayWeather/DayWeather';
 import Layout from './components/Layout/Layout';
 import Welcome from './components/pages/Welcome';
 function App() {
@@ -11,7 +11,7 @@ function App() {
         <Welcome />
       </Route>
       <Route path="/today">
-        <Input />
+        <DayWeather />
       </Route>
       <Route path="/days">
         <FiveDays />

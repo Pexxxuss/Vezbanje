@@ -3,6 +3,7 @@ import React from 'react';
 import { weatherKey } from '../../../config';
 import { useState } from 'react';
 import AirPolutionList from './AirPolutionList';
+import { Button, Input } from '@mui/material';
 function AirPolution() {
   const [enteredWeather, setEnteredWeather] = useState('');
   const [weather, setWeather] = useState('');
@@ -64,7 +65,7 @@ function AirPolution() {
           </h1>
           <div>
             <label htmlFor="weather">Enter a City</label>
-            <input
+            <Input
               type="text"
               id="weather"
               placeholder="Type City Name Here"
@@ -72,17 +73,19 @@ function AirPolution() {
               onChange={(event) => {
                 setEnteredWeather(event.target.value);
               }}
-            ></input>
+            ></Input>
           </div>
           <div>
-            <button
+            <Button
+              variant="contained"
+              disabled={!enteredWeather}
               id="button"
-              className={enteredWeather ? classes.button : classes.disabled}
               onClick={fetchWeatherHandler}
               type="submit"
+              sx={{ width: '10rem', height: '3rem', fontSize: '1.5rem' }}
             >
               Search
-            </button>
+            </Button>
           </div>
         </form>
         <section className={classes.list}>

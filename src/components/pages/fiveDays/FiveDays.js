@@ -1,8 +1,10 @@
 import classes from './FiveDays.module.css';
-import React from 'react';
 import { weatherKey } from '../../../config';
 import { useState } from 'react';
 import FiveDaysList from './FiveDaysList';
+import { Input, Button, buttonClasses } from '@mui/material';
+import * as React from 'react';
+
 function FiveDays() {
   const [enteredWeather, setEnteredWeather] = useState('');
   const [weather, setWeather] = useState('');
@@ -89,7 +91,7 @@ function FiveDays() {
               <pre>{JSON.stringify(weather, null, 2)}</pre>
             </div> */}
             <label htmlFor="weather">Enter a City</label>
-            <input
+            <Input
               type="text"
               id="weather"
               placeholder="Type City Name Here"
@@ -97,17 +99,19 @@ function FiveDays() {
               onChange={(event) => {
                 setEnteredWeather(event.target.value);
               }}
-            ></input>
+            ></Input>
           </div>
           <div>
-            <button
+            <Button
               id="button"
-              className={enteredWeather ? classes.button : classes.disabled}
+              variant="contained"
+              disabled={!enteredWeather}
+              sx={{ width: '10rem', height: '3rem', fontSize: '1.5rem' }}
               onClick={fetchWeatherHandler}
               type="submit"
             >
               Search
-            </button>
+            </Button>
           </div>
         </form>
         <section className={classes.list}>
