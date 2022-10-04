@@ -1,5 +1,6 @@
 .list {
   width: 100%;
+  height: auto;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -19,6 +20,7 @@
 }
 .time {
   width: 100%;
+  height: auto;
   margin: auto;
   display: flex;
   align-items: center;
@@ -27,6 +29,7 @@
   font-family: sans-serif;
   font-size: 1.5rem;
   padding: 1rem;
+  background-color: rgb(175, 113, 177);
 }
 .result {
   width: 100%;
@@ -38,6 +41,9 @@
 }
 .result .icon {
   padding-right: 15rem;
+}
+.result .icon img {
+  height: 8rem;
 }
 .subzero {
   color: red;
@@ -65,3 +71,11 @@
     padding-left: 0;
   }
 }
+@media (max-height: 660px) {
+  .time {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    font-size: 1rem;
+  }
+} ;

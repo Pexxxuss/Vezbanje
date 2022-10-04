@@ -1,14 +1,7 @@
 import React from 'react';
 import classes from './WeatherList.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloud } from '@fortawesome/free-solid-svg-icons';
+
 function WeatherList(props) {
-  let specialClass = '';
-  if (props.temp > 0) {
-    specialClass = classes.item;
-  } else {
-    specialClass = classes.subzero;
-  }
   const date = new Date();
   const showTime = date.getHours() + ':' + date.getMinutes();
   const current = `${date.getDate()}/${
@@ -24,7 +17,7 @@ function WeatherList(props) {
       <div className={classes.result}>
         <ul className={classes.list}>
           <li className={classes.item}>City: {props.name} </li>
-          <li className={specialClass}>
+          <li className={props.temp > 0 ? classes.item : classes.subzero}>
             Temperature curently is: {props.temp} degrees
           </li>
           <li className={classes.item}>
@@ -38,7 +31,10 @@ function WeatherList(props) {
           <li className={classes.item}>Humidity: {props.humidity}</li>
         </ul>
         <div className={classes.icon}>
-          <FontAwesomeIcon icon={faCloud} className="fa-10x" />
+          <img
+            src={`http://openweathermap.org/img/w/${props.icon}.png`}
+            alt="img"
+          />
         </div>
       </div>
     </React.Fragment>
